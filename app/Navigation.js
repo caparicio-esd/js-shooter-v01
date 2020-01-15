@@ -1,22 +1,36 @@
-
 /**
  * Programmatic Navigation and Page Transitions
- * 
- * 
  */
 
 
 /**
 * Global vars
-*
 */
-let links = GAME_UI.app.querySelectorAll('a[href^="#"]');
-let sections = GAME_UI.app.querySelectorAll('section');
-let modals = GAME_UI.app.querySelector('modal_window');
-
+let links;
+let sections;
+let modals;
+let animation = anime.timeline({
+    duration: 300,
+    easing: 'easeOutQuad'
+});
 
 
 /**
+ * @function navigationErrHandler
+ * @param game {Error} Trata errores que se den en la navegación
+ */
+const navigationErrHandler = (err = '') => {
+    if (err) {
+        console.error('Something went wrong');
+        console.error(err);
+    }
+};
+
+
+/**
+ * @function getLinkIdParent
+ * @param link {HTMLElement} Busca a page pertenece el link Clickado
+ * Se usa para navegar entre pages y menu
  * 
  */
 const getLinkIdParent = (link) => {
@@ -31,15 +45,19 @@ const getLinkIdParent = (link) => {
 
 
 /**
- * @function navigateTo
- * Init navigation
+ * @function initNavigation
+ * Inicio Eventos para crear navegación programática
  * 
+ * navigationType es el tipo de animación y viene definido 
+ * en el <a href="..." transition="navigationType"></a>
  */
 const initNavigation = () => {
     links.forEach(link => {
         link.addEventListener('click', ev => {
             ev.preventDefault();
-            navigateTo(link.hash, getLinkIdParent(link));
+
+            let navigationType = link.getAttribute('transition') || 'step';
+            navigateTo(link.hash, getLinkIdParent(link), navigationType);
         });
     });
 };
@@ -50,72 +68,70 @@ const initNavigation = () => {
  * Como la navegación está basada en bloques que se ven y no.
  * Simplemente esconde todo y muestra el elemento a navegar
  * 
- * @param getTo: @default = #menu_page -> Es el ID a navegar. Por defecto es #menu_page
+ * @param getTo {String} -> Id del elemento que entra
+ * @param getFrom {String} -> Id del elemento que sale
+ * @param navigationType {String} -> Tipo de animación
  * 
 */
-const navigateTo = (getTo = '#menu_page', getFrom = '') => {
+const navigateTo = (getTo = '#menu_page', getFrom = '', navigationType = 'step') => {
+
     let isModal =
         document.querySelector(getTo).classList.contains('modal_window') ||
         document.querySelector(getTo).classList.contains('spinner_window');
 
     if (isModal) {
+        // open modal
         document.querySelector(getTo).classList.add('active');
-    } else {
 
-        // // distribute navigations....
-        // sections.forEach(section => {
-        //     section.scrollTo(0, 0);
-        // });
-        sections.forEach(section => section.classList.remove('active'));
-        document.querySelector(getTo).classList.add('active');
-        location.hash = getTo;
-
-        if (getTo == '#main_page') {
-            startGame();
+        // distribute modal
+        if (navigationType == 'game_pause') {
+            animation_gamePause();
+        } else if (navigationType == 'game_confirm') {
+            animation_gameConfirm();
+        } else {
+            navigationErrHandler()
         }
 
-        // console.log(getTo, getFrom);
-        // if (getTo == "#settings_page" && getFrom == "#menu_page") {
-        //     animation_slideOut(getTo, getFrom);
-        // }
+    } else {
+
+        // distribute pages
+        if (navigationType == 'step') {
+            clearAll(getTo);
+        } else if (navigationType == 'slide_left') {
+            animation_slideOut(getTo, getFrom);
+        } else if (navigationType == 'slide_right') {
+            animation_slideIn(getTo, getFrom);
+        } else if (navigationType == 'game_begin') {
+            animation_gameBegin();
+        } else if (navigationType == 'game_stop') {
+            animation_gameStop();
+        } else if (navigationType == 'game_resume') {
+            animation_gameResume();
+        } else {
+            navigationErrHandler()
+        }
+
+        animation.finished.then(() => clearAll(getTo));
     }
 };
 
 
-
-const animation_slideOut = (getTo, getFrom) => {
-    let going = document.querySelector(getFrom);
-    let coming = document.querySelector(getTo);
-    anime({
-        targets: going,
-        translateX: '-100%',
-        easing: 'easeOutQuad',
-        duration: 2000
-    });
-    anime({
-        targets: coming,
-        translateX: '0%',
-        easing: 'easeOutQuad',
-        opacity: 1,
-        duration: 2000,
-        begin: (anim) => {
-            coming.classList.add('active');
-            coming.style.transform = 'translateX(100%)';
-            anim.play();
-        }
-    });
-};
-
-
 /**
- * @function getBack
- * @alias navigateTo() 
+ * @function clearAll
+ * @param {String} -> Id del elemento que entra
  * 
- * Just for debuggin purposes
- * 
+ * Limpiamos de clases, de estilos y de scroll cada elemento una vez que 
+ * ya está dentro por evitar errores
  */
-const getBack = () => {
-    navigateTo();
+const clearAll = (getTo) => {
+    location.hash = '!' + getTo;
+    sections.forEach(section => {
+        section.scrollTo(0, 0);
+        section.style.transform = '';
+        section.style.opacity = '';
+        section.classList.remove('active')
+    });
+    document.querySelector(getTo).classList.add('active');
 };
 
 
@@ -134,41 +150,21 @@ const hideSpinner = () => {
 };
 
 
+
 /**
  * @function init
- * Poner la navegación a funcionar. IIFE
+ * La ejecuto en main.js
  * 
 */
-const init = (() => {
+const init = () => {
+    links = GAME_UI.app.querySelectorAll('a[href^="#"]');
+    sections = GAME_UI.app.querySelectorAll('section');
+    modals = GAME_UI.app.querySelector('modal_window');
+
     initNavigation();
 
     // Fake splash
     setTimeout(() => {
         navigateTo('#menu_page');
     }, 1600);
-})();
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * No sabía donde ponerlo....
- * 
-*/
-let toggles = document.querySelectorAll('.toggle');
-toggles.forEach(t => {
-    t.addEventListener('click', () => {
-        t.classList.toggle('on');
-    });
-});
-
-navigateTo('#splash_page');
+};

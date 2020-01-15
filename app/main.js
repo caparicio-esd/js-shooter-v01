@@ -32,6 +32,7 @@ const OPPONENT_HEIGHT = 5,
         },
         modalWindows: {
             pause: document.querySelector('#modal_pause_window'),
+            confirm: document.querySelector('#modal_confirm'),
             spinner: document.querySelector('#modal_loading_spinner')
         },
         state: {
@@ -61,3 +62,24 @@ function startGame() {
         game.pauseOrResume();
     });
 }
+
+
+
+
+
+// Navegación
+init();
+navigateTo('#splash_page');
+
+
+
+/**
+ * No sabía donde ponerlo....
+ * 
+*/
+let toggles = document.querySelectorAll('.toggle');
+toggles.forEach(t => {
+    t.addEventListener('click', () => {
+        t.classList.toggle('on');
+    });
+});

@@ -45,23 +45,23 @@
                 </div>
             </div>
             <footer class="footer">
-                <a href="#main_page" class="btn btn_primary">Get started!</a>
+                <a href="#main_page" class="btn btn_primary" transition="game_begin">Get started!</a>
                 <div class="foot_navigation">
                     <ul class="inline_menu centered">
                         <li>
-                            <a href="#settings_page">
+                            <a href="#settings_page" transition="slide_left">
                                 <span class="mdi mdi-settings"></span>
                                 <span class="label">Settings</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#leaderboard_page">
+                            <a href="#leaderboard_page" transition="slide_left">
                                 <span class="mdi mdi-signal"></span>
                                 <span class="label">High Scores</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#themes_page">
+                            <a href="#themes_page" transition="slide_left">
                                 <span class="mdi mdi-clipboard-multiple-outline"></span>
                                 <span class="label">Themes</span>
                             </a>
@@ -89,7 +89,7 @@
                     </span>
                 </div>
                 <div class="pause">
-                    <a href="#modal_pause_window" class="pause_btn" id="pause">
+                    <a href="#modal_pause_window" class="pause_btn" id="pause" transition="game_pause">
                         <span class="mdi mdi-pause-circle-outline"></span>
                     </a>
                 </div>
@@ -132,8 +132,8 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn_primary" href="#main_page">Back to game</a>
-                <a class="btn btn_secondary" href="#modal_confirm">Quit game</a>
+                <a class="btn btn_primary" href="#main_page" transition="game_resume">Back to game</a>
+                <a class="btn btn_secondary" href="#modal_confirm" transition="game_confirm">Quit game</a>
             </div>
         </section>
 
@@ -145,8 +145,8 @@
                     If you quit the game, you'll lose all your points.<br>Are you sure?
                 </div>
                 <div class="cta">
-                    <a class="btn btn_primary" href="#menu_page">Quit</a>
-                    <a class="btn btn_secondary" href="#main_page">Cancelar</a>
+                    <a class="btn btn_primary" href="#menu_page" transition="game_stop">Quit</a>
+                    <a class="btn btn_secondary" href="#main_page" transition="game_resume">Cancelar</a>
                 </div>
             </div>
         </section>
@@ -188,7 +188,7 @@
                 </div>
             </div>
             <footer class="footer">
-                <a class="btn btn_primary" href="#menu_page">Volver al menú</a>
+                <a class="btn btn_primary" href="#menu_page" transition="slide_right">Volver al menú</a>
             </footer>
         </section>
 
@@ -262,7 +262,7 @@
                 </div>
             </section>
             <footer class="footer">
-                <a class="btn btn_primary" href="#menu_page" transition="slide_out">Volver al menú</a>
+                <a class="btn btn_primary" href="#menu_page" transition="slide_right">Volver al menú</a>
             </footer>
         </section>
 
@@ -311,7 +311,7 @@
                 </div>
             </div>
             <footer class="footer">
-                <a class="btn btn_primary" href="#menu_page">Volver al menú</a>
+                <a class="btn btn_primary" href="#menu_page" transition="slide_right">Volver al menú</a>
             </footer>
         </section>
 
@@ -334,8 +334,9 @@
     <script src="./app/Player.js" type="text/javascript"></script>
     <script src="./app/Opponent.js" type="text/javascript"></script>
     <script src="./app/Shot.js" type="text/javascript"></script>
-    <script src="./app/main.js" type="text/javascript"></script>
+    <script src="./app/Animations.js" type="text/javascript"></script>
     <script src="./app/Navigation.js" type="text/javascript"></script>
+    <script src="./app/main.js" type="text/javascript"></script>
 
 </body>
 
