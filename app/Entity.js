@@ -27,7 +27,7 @@ class Entity {
         this.myImage.style.width = this.width === "auto" ? "auto" : `${this.width}px`;
         this.myImage.style.top = `${this.y}px`;
         this.myImage.style.left = `${this.x}px`;
-        GAME_UI.pages.main.appendChild(this.myImage);
+        GAME_UI.gameBoard.appendChild(this.myImage);
     }
 
     /**

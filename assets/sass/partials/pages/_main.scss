@@ -48,6 +48,7 @@
 
             .pause_btn {
                 display: block;
+
                 .mdi {
                     display: block;
                 }
@@ -55,7 +56,11 @@
         }
     }
 
-    .game {}
+    .game {
+        width: 100%;
+        flex-basis: 100%;
+        position: relative;
+    }
 }
 
 

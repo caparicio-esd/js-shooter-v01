@@ -21,6 +21,7 @@ const OPPONENT_HEIGHT = 5,
 
     GAME_UI = {
         app: document.querySelector('#app'),
+        gameBoard: document.querySelector('.game'),
         pages: {
             splash: document.querySelector('#splash_page'),
             menu: document.querySelector('#menu_page'),

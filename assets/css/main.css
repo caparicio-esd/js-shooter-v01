@@ -757,10 +757,11 @@ a {
       -ms-flex-align: center;
           align-items: center;
   padding: 1.5rem;
-  overflow: auto;
   -webkit-transform: translateX(100%);
           transform: translateX(100%);
+  background-color: #fff;
   opacity: 0;
+  overflow: auto;
 }
 
 #app .full_window.active {
@@ -976,6 +977,13 @@ a {
 
 #main_page .ui .pause .pause_btn .mdi {
   display: block;
+}
+
+#main_page .game {
+  width: 100%;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  position: relative;
 }
 
 .Opponent {

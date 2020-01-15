@@ -30,8 +30,10 @@ class Game {
             window.addEventListener("touchstart", (e) => this.handleTouchStart(e, true));
             window.addEventListener("touchmove", (e) => this.handleTouchMove(e, false));
             this.started = true;
-            this.width = window.innerWidth;
-            this.height = window.innerHeight;
+            // 
+            // 
+            this.width = GAME_UI.gameBoard.clientWidth;
+            this.height = GAME_UI.gameBoard.clientHeight;
 
             this.player = new Player(this);
             this.timer = setInterval(() => this.update(), 50);

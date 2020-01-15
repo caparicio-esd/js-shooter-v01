@@ -63,15 +63,21 @@ const navigateTo = (getTo = '#menu_page', getFrom = '') => {
     } else {
 
         // // distribute navigations....
+        // sections.forEach(section => {
+        //     section.scrollTo(0, 0);
+        // });
+        sections.forEach(section => section.classList.remove('active'));
+        document.querySelector(getTo).classList.add('active');
+        location.hash = getTo;
 
-        // sections.forEach(section => section.classList.remove('active'));
-        // document.querySelector(getTo).classList.add('active');
-        // location.hash = getTo;
-
-        console.log(getTo, getFrom);
-        if (getTo == "#settings_page" && getFrom == "#menu_page") {
-            animation_slideOut(getTo, getFrom);
+        if (getTo == '#main_page') {
+            startGame();
         }
+
+        // console.log(getTo, getFrom);
+        // if (getTo == "#settings_page" && getFrom == "#menu_page") {
+        //     animation_slideOut(getTo, getFrom);
+        // }
     }
 };
 
@@ -84,15 +90,19 @@ const animation_slideOut = (getTo, getFrom) => {
         targets: going,
         translateX: '-100%',
         easing: 'easeOutQuad',
-        duration: 200
+        duration: 2000
     });
     anime({
         targets: coming,
-        translateX: 0,
+        translateX: '0%',
         easing: 'easeOutQuad',
         opacity: 1,
-        duration: 200
-
+        duration: 2000,
+        begin: (anim) => {
+            coming.classList.add('active');
+            coming.style.transform = 'translateX(100%)';
+            anim.play();
+        }
     });
 };
 
@@ -133,9 +143,9 @@ const init = (() => {
     initNavigation();
 
     // Fake splash
-    // setTimeout(() => {
-    //     navigateTo('#menu_page');
-    // }, 1600);
+    setTimeout(() => {
+        navigateTo('#menu_page');
+    }, 1600);
 })();
 
 
