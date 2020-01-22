@@ -85,9 +85,11 @@ const navigateTo = (getTo = '#menu_page', getFrom = '', navigationType = 'step')
 
         // distribute modal
         if (navigationType == 'game_pause') {
-            animation_gamePause();
+            animation_gamePause(() => {
+                game.pauseOrResume();
+            });
         } else if (navigationType == 'game_confirm') {
-            animation_gameConfirm();
+            animation_gameConfirm(() => { });
         } else {
             navigationErrHandler()
         }
@@ -97,21 +99,40 @@ const navigateTo = (getTo = '#menu_page', getFrom = '', navigationType = 'step')
         // distribute pages
         if (navigationType == 'step') {
             clearAll(getTo);
+
         } else if (navigationType == 'slide_left') {
             animation_slideOut(getTo, getFrom);
-        } else if (navigationType == 'slide_right') {
+        }
+        else if (navigationType == 'slide_right') {
             animation_slideIn(getTo, getFrom);
+
         } else if (navigationType == 'game_begin') {
-            animation_gameBegin();
+            animation_gameBegin(() => {
+                startGame();
+            });
         } else if (navigationType == 'game_stop') {
-            animation_gameStop();
+            animation_gameStop(() => {
+                game.endGame();
+                GAME_UI.gameBoard.innerHTML = '';
+            });
         } else if (navigationType == 'game_resume') {
-            animation_gameResume();
+            animation_gameResume(() => {
+                game.pauseOrResume();
+            });
+        } else if (navigationType == 'game_pause') {
+            animation_gamePause(() => {
+                game.pauseOrResume();
+            });
         } else {
             navigationErrHandler()
         }
 
-        animation.finished.then(() => clearAll(getTo));
+        console.log(navigationType);
+
+
+        animation.finished.then((a, b) => {
+            clearAll(getTo)
+        });
     }
 };
 

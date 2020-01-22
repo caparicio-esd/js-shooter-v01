@@ -20,6 +20,8 @@ const animation_slideOut = (getTo, getFrom) => {
         translateX: ['100%', '0%'],
         opacity: [0, 1]
     }, '-=300');
+
+    return animation;
 };
 
 /**
@@ -44,6 +46,8 @@ const animation_slideIn = (getTo, getFrom) => {
         translateX: ['-100%', '0%'],
         opacity: [0, 1]
     }, '-=300');
+
+    return animation;
 };
 
 /**
@@ -51,10 +55,13 @@ const animation_slideIn = (getTo, getFrom) => {
  * 
  * Animación de entrada al juego
  */
-const animation_gameBegin = () => {
+const animation_gameBegin = (cb) => {
     animation = anime.timeline({
         duration: 300,
-        easing: 'easeOutQuad'
+        easing: 'easeOutQuad',
+        complete: () => {
+            cb();
+        }
     });
     animation.add({
         targets: GAME_UI.pages.menu,
@@ -68,6 +75,8 @@ const animation_gameBegin = () => {
         translateY: ['-100%', '0%'],
         opacity: [0, 1]
     }, '-=300');
+
+    return animation;
 };
 
 
@@ -76,9 +85,12 @@ const animation_gameBegin = () => {
  * 
  * Animación de pause al juego
  */
-const animation_gamePause = () => {
+const animation_gamePause = (cb) => {
     animation = anime.timeline({
-        easing: 'easeOutQuad'
+        easing: 'easeOutQuad',
+        complete: () => {
+            cb();
+        }
     });
     animation.add({
         targets: GAME_UI.modalWindows.pause,
@@ -86,6 +98,8 @@ const animation_gamePause = () => {
         opacity: [0, 1],
         duration: 300
     });
+
+    return animation;
 };
 
 /**
@@ -93,9 +107,12 @@ const animation_gamePause = () => {
  * 
  * Animación de continuación al juego cuando haya sido pausado
  */
-const animation_gameResume = () => {
+const animation_gameResume = (cb) => {
     animation = anime.timeline({
-        easing: 'easeOutQuad'
+        easing: 'easeOutQuad',
+        complete: () => {
+            cb();
+        }
     });
     animation.add({
         targets: [
@@ -106,6 +123,8 @@ const animation_gameResume = () => {
         opacity: [1, 0],
         duration: 300
     });
+
+    return animation;
 };
 
 /**
@@ -113,9 +132,12 @@ const animation_gameResume = () => {
  * 
  * Animación de salida del juego
  */
-const animation_gameConfirm = () => {
+const animation_gameConfirm = (cb) => {
     animation = anime.timeline({
-        easing: 'easeOutQuad'
+        easing: 'easeOutQuad',
+        complete: () => {
+            cb();
+        }
     });
     animation.add({
         targets: [
@@ -125,12 +147,21 @@ const animation_gameConfirm = () => {
         opacity: [0, 1],
         duration: 300
     });
+
+    return animation;
 };
 
-
-const animation_gameStop = (getTo, getFrom) => {
+/**
+ * @function animation_gameStop
+ * 
+ * Animación de salida del juego
+ */
+const animation_gameStop = (cb) => {
     animation = anime.timeline({
-        easing: 'easeOutQuad'
+        easing: 'easeOutQuad',
+        complete: () => {
+            cb();
+        }
     });
     animation.add({
         targets: [
@@ -156,6 +187,8 @@ const animation_gameStop = (getTo, getFrom) => {
         translateY: ['-100%', '0%'],
         opacity: [0, 1],
     }, '-=600');
+
+    return animation;
 };
 
 

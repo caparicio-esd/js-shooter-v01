@@ -58,9 +58,9 @@ var game;
 function startGame() {
     game = new Game();
     game.start();
-    document.getElementById("pause").addEventListener("click", (e) => {
-        game.pauseOrResume();
-    });
+    // document.getElementById("pause").addEventListener("click", (e) => {
+    //     game.pauseOrResume();
+    // });
 }
 
 
